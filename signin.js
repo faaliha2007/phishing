@@ -84,16 +84,20 @@ passwordbox.oninput = validate
 confirmbox.oninput = validate
 
 signinbtn.addEventListener("click", function () {
-    validate()
 
-    if (!signinbtn.disabled) {
+    let isValid = validate()  
+
+    if (isValid) {
+
         msg.classList.remove("opacity-0")
         msg.classList.add("opacity-100")
 
         setTimeout(() => {
             msg.classList.add("opacity-0")
             msg.classList.remove("opacity-100")
+
             window.location.href = "login.html"
+
         }, 2000)
     }
 })
