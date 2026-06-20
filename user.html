@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>SpamShield Dashboard</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="min-h-screen bg-[#1c1719] text-white">
+
+  <!-- Background glow effects -->
+  <div class="fixed left-0 top-20 -z-10 h-80 w-80 rounded-full bg-orange-500/10 blur-3xl"></div>
+
+  <div class="fixed bottom-0 right-0 -z-10 h-80 w-80 rounded-full bg-rose-500/10 blur-3xl"></div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 flex items-center justify-between border-b border-white/10 bg-[#1c1719]/90 px-4 py-4 backdrop-blur-md sm:px-10">
+
+   <!-- Settings button -->
+<button
+  type="button"
+  class="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-3 transition hover:bg-white/20"
+>
+  <!-- Settings icon -->
+  <svg
+    class="h-6 w-6"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.592c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.244c.275.476.168 1.08-.258 1.43l-1.006.827c-.293.24-.438.613-.43.992a8.2 8.2 0 0 1 0 .254c-.008.378.137.75.43.992l1.006.827c.426.35.533.954.258 1.43l-1.296 2.244a1.125 1.125 0 0 1-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.6 6.6 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.542-.56.94-1.11.94h-2.592c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.7 6.7 0 0 1-.22-.127c-.325-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 0 1-1.37-.49L3.56 15.38a1.125 1.125 0 0 1 .258-1.43l1.006-.827c.293-.24.438-.613.43-.992a8.2 8.2 0 0 1 0-.254c.008-.378-.137-.75-.43-.992l-1.006-.827a1.125 1.125 0 0 1-.258-1.43l1.296-2.244a1.125 1.125 0 0 1 1.37-.49l1.217.456c.355.133.75.072 1.076-.124.072-.044.146-.087.22-.128.331-.183.581-.495.644-.869l.213-1.281Z"
+    ></path>
+
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+    ></path>
+  </svg>
+
+  <span class="hidden font-medium sm:inline">
+    Settings
+  </span>
+</button>
+
+    <!-- Username -->
+    <div class="text-center">
+      <p class="hidden text-xs text-gray-400 sm:block">
+        Welcome back
+      </p>
+
+      <h1 class="text-lg font-bold sm:text-2xl">
+        Hi,
+        <span id="username" class="text-orange-400">
+          Username
+        </span>
+      </h1>
+    </div>
+
+    <!-- Edit profile button -->
+  <!-- App logo and name -->
+<div class="flex items-center gap-3">
+
+  <!-- Shield logo -->
+  <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 to-rose-500 shadow-lg shadow-orange-500/20">
+    <svg
+      class="h-7 w-7"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M12 3 4.5 6v5.25c0 4.65 3.15 8.7 7.5 9.75 4.35-1.05 7.5-5.1 7.5-9.75V6L12 3Z"
+      ></path>
+
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="m9 12 2 2 4-4"
+      ></path>
+    </svg>
+  </div>
+
+  <!-- App name -->
+  <span class="hidden bg-gradient-to-r from-orange-300 to-rose-400 bg-clip-text text-xl font-bold text-transparent sm:inline">
+    SpamShield
+  </span>
+
+</div>
+
+  </header>
+
+  <!-- Main page content -->
+  <main class="mx-auto max-w-5xl px-5 py-10 sm:px-10">
+
+    <!-- Section heading -->
+    <section class="mb-8">
+
+      <p class="text-sm font-semibold uppercase tracking-[0.25em] text-orange-400">
+        Message Activity
+      </p>
+
+      <h2 class="mt-2 text-3xl font-bold sm:text-5xl">
+        Recent Spams
+      </h2>
+
+      <p class="mt-3 text-sm text-gray-400 sm:text-base">
+        Messages recently identified as spam.
+      </p>
+
+    </section>
+
+    <!-- Scrollable spam messages -->
+    <section class="max-h-[65vh] space-y-4 overflow-y-auto pr-2">
+
+      <!-- Message 1 -->
+      <article class="rounded-2xl border border-orange-500/30 bg-white/5 p-5 transition hover:border-orange-400/50 hover:bg-white/10">
+
+        <div class="flex items-start justify-between gap-4">
+
+          <div>
+            <h3 class="text-lg font-semibold text-orange-300">
+              Unknown Sender
+            </h3>
+
+            <p class="mt-2 text-sm leading-6 text-gray-300 sm:text-base">
+              Congratulations! You have won ₹50,000. Click the link now to
+              claim your prize.
+            </p>
+          </div>
+
+          <span class="shrink-0 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-300">
+            Spam
+          </span>
+
+        </div>
+
+        <p class="mt-4 text-xs text-gray-500">
+          Today, 10:32 AM
+        </p>
+
+      </article>
+
+      <!-- Message 2 -->
+      <article class="rounded-2xl border border-orange-500/30 bg-white/5 p-5 transition hover:border-orange-400/50 hover:bg-white/10">
+
+        <div class="flex items-start justify-between gap-4">
+
+          <div>
+            <h3 class="text-lg font-semibold text-orange-300">
+              Fake Bank Alert
+            </h3>
+
+            <p class="mt-2 text-sm leading-6 text-gray-300 sm:text-base">
+              Your bank account has been blocked. Send your OTP immediately
+              to restore access.
+            </p>
+          </div>
+
+          <span class="shrink-0 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-300">
+            Spam
+          </span>
+
+        </div>
+
+        <p class="mt-4 text-xs text-gray-500">
+          Yesterday, 6:15 PM
+        </p>
+
+      </article>
+
+      <!-- Message 3 -->
+      <article class="rounded-2xl border border-orange-500/30 bg-white/5 p-5 transition hover:border-orange-400/50 hover:bg-white/10">
+
+        <div class="flex items-start justify-between gap-4">
+
+          <div>
+            <h3 class="text-lg font-semibold text-orange-300">
+              Limited Offer
+            </h3>
+
+            <p class="mt-2 text-sm leading-6 text-gray-300 sm:text-base">
+              Exclusive deal! Purchase now and receive a free smartphone.
+              This offer expires in ten minutes.
+            </p>
+          </div>
+
+          <span class="shrink-0 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-300">
+            Spam
+          </span>
+
+        </div>
+
+        <p class="mt-4 text-xs text-gray-500">
+          June 18, 2:45 PM
+        </p>
+
+      </article>
+
+      <!-- Message 4 -->
+      <article class="rounded-2xl border border-orange-500/30 bg-white/5 p-5 transition hover:border-orange-400/50 hover:bg-white/10">
+
+        <div class="flex items-start justify-between gap-4">
+
+          <div>
+            <h3 class="text-lg font-semibold text-orange-300">
+              Lottery Winner
+            </h3>
+
+            <p class="mt-2 text-sm leading-6 text-gray-300 sm:text-base">
+              Your mobile number was selected as an international lottery
+              winner. Reply with your personal information.
+            </p>
+          </div>
+
+          <span class="shrink-0 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-300">
+            Spam
+          </span>
+
+        </div>
+
+        <p class="mt-4 text-xs text-gray-500">
+          June 17, 11:20 AM
+        </p>
+
+      </article>
+
+      <!-- Message 5 -->
+      <article class="rounded-2xl border border-orange-500/30 bg-white/5 p-5 transition hover:border-orange-400/50 hover:bg-white/10">
+
+        <div class="flex items-start justify-between gap-4">
+
+          <div>
+            <h3 class="text-lg font-semibold text-orange-300">
+              Account Warning
+            </h3>
+
+            <p class="mt-2 text-sm leading-6 text-gray-300 sm:text-base">
+              Your account will be permanently deleted today. Click the link
+              and confirm your password immediately.
+            </p>
+          </div>
+
+          <span class="shrink-0 rounded-full bg-rose-500/20 px-3 py-1 text-xs font-semibold text-rose-300">
+            Spam
+          </span>
+
+        </div>
+
+        <p class="mt-4 text-xs text-gray-500">
+          June 16, 8:40 AM
+        </p>
+
+      </article>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
