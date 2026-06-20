@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#1c1719] min-h-screen flex items-center justify-center">
+
+
+<div class="absolute left-0 top-0 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl"></div>
+
+<div class="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-rose-500/20 blur-3xl"></div>
+
+    
+
+  <div class="absolute w-96 h-96 bg-[#1c1719] blur-3xl opacity-20 rounded-full -top-20 -left-20"></div>
+
+  <div class="relative w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl p-10 text-white">
+
+    <h1 class="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-amber-300 to-rose-400 bg-clip-text text-transparent">
+      Sign In
+    </h1>
+
+    <form class="space-y-5">
+
+      <div>
+        <label class="text-sm font-semibold text-gray-300">Name</label>
+        <input type="text"
+          placeholder="Your name"
+          id="namebox"
+          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-400 outline-none text-white">
+
+        <p class="text-sm text-red-500 mt-1 hidden" id="nameerror">Name is required</p>
+      </div>
+
+      <div>
+        <label class="text-sm font-semibold text-gray-300">Email</label>
+        <input type="email"
+        id="emailbox"
+          placeholder="example@gmail.com"
+          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-400 outline-none text-white">
+
+        <p class="text-sm text-red-500 mt-1 hidden" id="emailerror">Enter a valid email address</p>
+      </div>
+
+      <div>
+        <label class="text-sm font-semibold text-gray-300">Password</label>
+        <input type="password"
+        id="passwordbox"
+          placeholder="••••••••"
+          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-400 outline-none text-white">
+
+        <p class="text-sm text-red-500 mt-1 hidden" id="passworderror">Password must be at least 6 characters</p>
+      </div>
+
+      <div>
+        <label class="text-sm font-semibold text-gray-300" >Confirm Password</label>
+        <input type="password"
+          placeholder="••••••••"
+          id="confirmbox"
+          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-400 outline-none text-white">
+
+        <p class="text-sm text-red-500 mt-1 hidden" id="confirmerror">Passwords do not match</p>
+      </div>
+
+      <button type="button"
+      id="signinbtn"
+        class="w-full p-3 mt-4 rounded-lg bg-gradient-to-r from-orange-400 to-rose-500 hover:bg-orange-600 text-black font-bold transition cursor-not-allowed" id="signinbtn">
+        Sign In
+      </button>
+
+      <p class="text-center text-sm text-gray-400">
+        Already have an account?
+        <span onClick="gologin()" class="bg-gradient-to-r from-amber-300 to-rose-400 bg-clip-text text-transparent cursor-pointer hover:underline">Log In</span>
+      </p>
+
+  
+      <div class="flex items-center justify-center gap-3 border border-gray-700 p-3 rounded-lg cursor-pointer hover:bg-gray-800 transition">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5">
+        <span clasas="text-sm">Continue with Google</span>
+      </div>
+
+    </form>
+
+
+
+   <div id="msg"
+    class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-400 to-rose-500 text-white text-sm px-5 py-3 rounded-full shadow-lg opacity-0 transition">
+    Welcome to phishing
+  </div>
+
+
+
+
+
+
+  </div>
+
+<script src="signin.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk Score</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 flex items-center justify-center relative text-white">
+
+<div class="absolute top-10 left-10 w-72 h-72 bg-red-500/20 blur-3xl  rounded-full"></div>
+<div class="absolute bottom-10 right-10 w-72 h-72 bg-orange-500/20 blur-3xl rounded-full text-center"></div>
+
+
+<button onClick="cross()" class="absolute top-4 right-4 text-gray-400 hover:text-red-400 text-xl font-bold">
+  ✕
+</button>
+
+
+<div class="w-full max-w-xl bg-transparant rounded-2xl shadow-2xl p-8 text-center">
+  <h1 class="text-xl font-bold mb-6 text-red-400">
+    Security Risk Detected
+  </h1>
+
+  <div class="flex justify-center mb-6">
+    <div class="relative w-40 h-40">
+
+      <div class="absolute inset-0 rounded-full border-8 border-gray-700"></div>
+
+      <div class="absolute inset-0 rounded-full border-8 border-red-500 border-t-transparent animate-spin"></div>
+
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div>
+          <p class="text-3xl font-bold text-red-400">95%</p>
+          <p class="text-xs text-gray-400">Risk Score</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bg-gray-800 border border-red-500/40 rounded-xl p-4 mb-6">
+    <p class="text-sm text-gray-300">
+      Suspicious spam message detected. This message may attempt to steal personal information.
+    </p>
+  </div>
+
+  <p class="text-red-400 font-semibold mb-6">
+    Immediate Action Recommended!!
+  </p>
+
+  <div class="flex gap-4">
+
+    <button onClick="gorisky()" class="flex-1 border border-gray-800 bg-gradient-to-r from-amber-300 to-rose-400 bg-clip-text text-transparent hover:text-white  transition p-3 rounded-lg font-semibold">
+      View Message
+    </button>
+
+    <button id="blkbtn" class="flex-1 bg-red-600 hover:bg-orange-500 transition p-3 rounded-lg font-semibold">
+      Block & Report
+    </button>
+
+  </div>
+
+
+ <div id="riskmsg"
+    class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-400 to-rose-500 text-white text-sm px-5 py-3 rounded-full shadow-lg opacity-0 transition">
+     Messege sent to server
+  </div>
+
+
+</div>
+<script src="form.js"></script>
+</body>
+</html>
