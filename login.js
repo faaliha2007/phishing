@@ -50,10 +50,12 @@ loginbtn.addEventListener("click", function () {
     if (!loginbtn.disabled) {
         msg.classList.remove("opacity-0")
         msg.classList.add("opacity-100")
+      
 
         setTimeout(() => {
             msg.classList.add("opacity-0")
             msg.classList.remove("opacity-100")
+            window.location.href = "notification.html"
         }, 2000)
     }
 })
