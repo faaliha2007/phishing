@@ -57,13 +57,13 @@ function validate() {
     return valid; 
 }
 
-// live validation
+
 namebox.oninput = validate;
 emailbox.oninput = validate;
 passwordbox.oninput = validate;
 confirmbox.oninput = validate;
 
-// click
+
 signinbtn.addEventListener("click", function () {
 
     if (validate()) {
@@ -76,7 +76,7 @@ signinbtn.addEventListener("click", function () {
             msg.classList.remove("opacity-100");
 
            
-            window.location.href = "login.html";
+            window.location.href = "notification.html";
 
         }, 2000);
     }
