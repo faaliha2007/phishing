@@ -93,6 +93,7 @@ signinbtn.addEventListener("click", function () {
         setTimeout(() => {
             msg.classList.add("opacity-0")
             msg.classList.remove("opacity-100")
+            window.location.href = "login.html"
         }, 2000)
     }
 })
