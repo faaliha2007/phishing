@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhishGuard — Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --bg-1:#050507;
+    --bg-2:#0B0B0F;
+    --bg-3:#141010;
+    --orange:#FF7A35;
+    --orange-bright:#FF5B3D;
+    --red:#FF4500;
+    --white:#FFFFFF;
+    --text-secondary:rgba(255,255,255,0.65);
+    --text-faint:rgba(255,255,255,0.4);
+    --glass-border:rgba(255,122,53,0.20);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;width:100%;}
+
+  body{
+    font-family:'Inter',sans-serif;
+    background:
+      radial-gradient(ellipse 700px 500px at 10% 6%, rgba(255,90,40,0.16), transparent 60%),
+      radial-gradient(ellipse 600px 600px at 90% 12%, rgba(255,69,0,0.10), transparent 55%),
+      radial-gradient(ellipse 900px 700px at 50% 40%, rgba(255,122,53,0.08), transparent 60%),
+      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+    color:var(--white);
+    min-height:100vh;
+    width:100%;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* floating particles */
+  .particle{
+    position:fixed;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,140,80,0.8), rgba(255,69,0,0) 70%);
+    pointer-events:none;
+    opacity:0.5;
+    animation:drift linear infinite;
+    z-index:0;
+  }
+  @keyframes drift{
+    0%{transform:translateY(0) translateX(0); opacity:0;}
+    10%{opacity:0.6;}
+    90%{opacity:0.4;}
+    100%{transform:translateY(-120vh) translateX(20px); opacity:0;}
+  }
+
+  .page{
+    position:relative;
+    z-index:1;
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:26px 20px 60px;
+  }
+
+  /* ===== HEADER ===== */
+  .topbar{
+    width:100%;
+    max-width:620px;
+    display:grid;
+    grid-template-columns:44px 1fr 44px;
+    align-items:center;
+    margin-bottom:8px;
+  }
+
+  .back-btn{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.14);
+    backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:0.95rem;
+    cursor:pointer;
+    transition:all 0.25s ease;
+  }
+  .back-btn:hover{
+    background:rgba(255,122,53,0.12);
+    border-color:rgba(255,122,53,0.5);
+    transform:translateX(-3px);
+    box-shadow:0 0 16px rgba(255,90,40,0.3);
+  }
+
+  .topbar-title{
+    text-align:center;
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:0.3px;
+  }
+
+  .header-block{
+    text-align:center;
+    margin:22px 0 30px;
+  }
+  .eyebrow{
+    font-family:'Playfair Display',serif;
+    font-weight:600;
+    font-size:0.76rem;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:10px;
+  }
+  h1.title{
+    font-family:'Playfair Display',serif;
+    font-weight:800;
+    font-size:2.3rem;
+    margin-bottom:8px;
+  }
+  .subtitle{
+    color:var(--text-secondary);
+    font-size:0.92rem;
+    max-width:380px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+
+  /* ===== CONTENT ===== */
+  .content{
+    width:100%;
+    max-width:620px;
+  }
+
+  .group{
+    margin-bottom:30px;
+    opacity:0;
+    transform:translateY(14px);
+    animation:fadeUp 0.6s ease forwards;
+  }
+  .group:nth-of-type(1){animation-delay:0.05s;}
+  .group:nth-of-type(2){animation-delay:0.12s;}
+  .group:nth-of-type(3){animation-delay:0.19s;}
+  .group:nth-of-type(4){animation-delay:0.26s;}
+  .group:nth-of-type(5){animation-delay:0.33s;}
+
+  @keyframes fadeUp{
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .group-label{
+    font-size:0.72rem;
+    font-weight:700;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin:0 4px 12px;
+  }
+
+  .setting-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .setting-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:15px 16px;
+    border-radius:16px;
+    background:linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 4px 22px rgba(0,0,0,0.35);
+    transition:transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+    cursor:pointer;
+    text-decoration:none;
+    color:inherit;
+  }
+  .setting-card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(255,122,53,0.5);
+    background:linear-gradient(135deg, rgba(255,122,53,0.08), rgba(255,255,255,0.02));
+    box-shadow:0 10px 28px rgba(255,80,30,0.16), 0 4px 22px rgba(0,0,0,0.4);
+  }
+  .setting-card:active{transform:translateY(0) scale(0.99);}
+
+  .setting-icon{
+    flex-shrink:0;
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,122,53,0.10);
+    border:1px solid rgba(255,122,53,0.32);
+    color:var(--orange-bright);
+    font-size:1.05rem;
+    transition:box-shadow 0.22s ease;
+  }
+  .setting-card:hover .setting-icon{
+    box-shadow:0 0 14px rgba(255,90,40,0.4);
+  }
+
+  .setting-text{flex:1;min-width:0;}
+  .setting-title{
+    font-weight:700;
+    font-size:0.94rem;
+    margin-bottom:2px;
+  }
+  .setting-desc{
+    font-size:0.78rem;
+    color:var(--text-secondary);
+    line-height:1.35;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .setting-value{
+    flex-shrink:0;
+    font-size:0.78rem;
+    font-weight:600;
+    color:var(--text-faint);
+    white-space:nowrap;
+  }
+
+  .chevron{
+    flex-shrink:0;
+    color:var(--text-faint);
+    font-size:0.85rem;
+    transition:transform 0.22s ease, color 0.22s ease;
+  }
+  .setting-card:hover .chevron{
+    color:var(--orange-bright);
+    transform:translateX(3px);
+  }
+
+  /* ===== LOGOUT ===== */
+  .logout-card{
+    border-color:rgba(255,69,0,0.4);
+    background:linear-gradient(135deg, rgba(255,69,0,0.10), rgba(255,69,0,0.02));
+  }
+  .logout-card .setting-icon{
+    background:rgba(255,69,0,0.14);
+    border-color:rgba(255,69,0,0.45);
+    color:var(--red);
+  }
+  .logout-card .setting-title{color:#FF8568;}
+  .logout-card:hover{
+    border-color:rgba(255,69,0,0.7);
+    box-shadow:0 10px 28px rgba(255,69,0,0.2), 0 4px 22px rgba(0,0,0,0.4);
+  }
+  .logout-card:hover .setting-icon{
+    box-shadow:0 0 14px rgba(255,69,0,0.5);
+  }
+
+  .app-version{
+    text-align:center;
+    margin-top:8px;
+    font-size:0.74rem;
+    color:var(--text-faint);
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(3,2,2,0.72);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.25s ease;
+    padding:20px;
+  }
+  .modal-overlay.active{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .modal-card{
+    width:100%;
+    max-width:360px;
+    border-radius:20px;
+    padding:28px 26px 24px;
+    background:linear-gradient(160deg, #16100E 0%, #0E0A09 100%);
+    border:1px solid rgba(255,69,0,0.35);
+    box-shadow:0 0 50px rgba(255,69,0,0.18), 0 20px 60px rgba(0,0,0,0.6);
+    text-align:center;
+    transform:scale(0.92) translateY(10px);
+    transition:transform 0.28s cubic-bezier(.2,.9,.3,1.2);
+  }
+  .modal-overlay.active .modal-card{
+    transform:scale(1) translateY(0);
+  }
+
+  .modal-icon{
+    width:54px;
+    height:54px;
+    margin:0 auto 16px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--orange), var(--red));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.3rem;
+    box-shadow:0 0 22px rgba(255,69,0,0.5);
+  }
+
+  .modal-title{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:1.25rem;
+    margin-bottom:8px;
+  }
+  .modal-text{
+    font-size:0.86rem;
+    color:var(--text-secondary);
+    line-height:1.5;
+    margin-bottom:22px;
+  }
+
+  .modal-actions{
+    display:flex;
+    gap:10px;
+  }
+  .modal-btn{
+    flex:1;
+    padding:13px 16px;
+    border-radius:999px;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:0.88rem;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .modal-btn-cancel{
+    background:rgba(255,255,255,0.06);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.14);
+  }
+  .modal-btn-cancel:hover{
+    background:rgba(255,255,255,0.1);
+    transform:translateY(-1px);
+  }
+  .modal-btn-confirm{
+    background:linear-gradient(135deg, var(--orange-bright), var(--red));
+    color:#fff;
+    box-shadow:0 6px 20px rgba(255,69,0,0.4);
+  }
+  .modal-btn-confirm:hover{
+    transform:translateY(-1px);
+    box-shadow:0 8px 26px rgba(255,69,0,0.55);
+  }
+
+  /* toast */
+  .toast{
+    position:fixed;
+    bottom:26px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:linear-gradient(135deg, rgba(255,90,40,0.18), rgba(20,16,16,0.95));
+    border:1px solid rgba(255,122,53,0.4);
+    color:#fff;
+    padding:13px 22px;
+    border-radius:999px;
+    font-size:0.85rem;
+    font-weight:600;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    opacity:0;
+    pointer-events:none;
+    transition:all 0.3s ease;
+    z-index:60;
+    white-space:nowrap;
+  }
+  .toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+
+  @media(max-width:380px){
+    h1.title{font-size:1.95rem;}
+    .setting-desc{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <button class="back-btn" id="backBtn" aria-label="Go back">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <div class="topbar-title">SpamShield</div>
+    <span></span>
+  </div>
+
+  <div class="header-block">
+    <div class="eyebrow">Preferences</div>
+    <h1 class="title">Settings</h1>
+    <p class="subtitle">Manage your account, protection level, and how PhishGuard keeps you safe.</p>
+  </div>
+
+  <div class="content">
+
+    <!-- Account -->
+    <div class="group">
+      <div class="group-label">Account</div>
+      <div class="setting-list">
+        <a class="setting-card" href="#" onclick="return go(this,'Profile')">
+          <div class="setting-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Profile</div>
+            <div class="setting-desc">View and edit personal details</div>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+
+        <a class="setting-card" href="#" onclick="return go(this,'Language')">
+          <div class="setting-icon"><i class="fa-solid fa-globe"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Language</div>
+            <div class="setting-desc">Change application language</div>
+          </div>
+          <span class="setting-value">English</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Protection -->
+    <div class="group">
+      <div class="group-label">Protection</div>
+      <div class="setting-list">
+        <a class="setting-card" href="#" onclick="return go(this,'Notification Settings')">
+          <div class="setting-icon"><i class="fa-solid fa-bell"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Notification Settings</div>
+            <div class="setting-desc">Manage alert notifications</div>
+          </div>
+          <span class="setting-value">On</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+
+        <a class="setting-card" href="#" onclick="return go(this,'Privacy & Security')">
+          <div class="setting-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Privacy &amp; Security</div>
+            <div class="setting-desc">Security preferences and protection options</div>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+
+        <a class="setting-card" href="#" onclick="return go(this,'Risk Sensitivity Level')">
+          <div class="setting-icon"><i class="fa-solid fa-sliders"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Risk Sensitivity Level</div>
+            <div class="setting-desc">Low / Medium / High detection sensitivity</div>
+          </div>
+          <span class="setting-value">Medium</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+
+        <a class="setting-card" href="#" onclick="return go(this,'Alert Preferences')">
+          <div class="setting-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Alert Preferences</div>
+            <div class="setting-desc">Configure phishing alert behavior</div>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Data -->
+    <div class="group">
+      <div class="group-label">Data &amp; Privacy</div>
+      <div class="setting-list">
+        <a class="setting-card" href="#" onclick="return go(this,'Scan History')">
+          <div class="setting-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Scan History</div>
+            <div class="setting-desc">View previously scanned links and messages</div>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+
+        <a class="setting-card" href="#" onclick="return go(this,'Data Management')">
+          <div class="setting-icon"><i class="fa-solid fa-database"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Data Management</div>
+            <div class="setting-desc">Clear scan history and stored data</div>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+
+        <a class="setting-card" href="#" onclick="return go(this,'Permissions')">
+          <div class="setting-icon"><i class="fa-solid fa-key"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Permissions</div>
+            <div class="setting-desc">Manage app permissions</div>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Support -->
+    <div class="group">
+      <div class="group-label">Support</div>
+      <div class="setting-list">
+        <a class="setting-card" href="#" onclick="return go(this,'Help & Support')">
+          <div class="setting-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Help &amp; Support</div>
+            <div class="setting-desc">Contact support and FAQs</div>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+
+        <a class="setting-card" href="#" onclick="return go(this,'About App')">
+          <div class="setting-icon"><i class="fa-solid fa-circle-info"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">About App</div>
+            <div class="setting-desc">Version information and app details</div>
+          </div>
+          <span class="setting-value">v2.4.1</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Logout -->
+    <div class="group">
+      <div class="setting-list">
+        <div class="setting-card logout-card" id="logoutTrigger">
+          <div class="setting-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Logout</div>
+            <div class="setting-desc">Sign out of your SpamShield account</div>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </div>
+      </div>
+      <div class="app-version">SpamShield v2.4.1 — Build 2026.06</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Logout confirmation modal -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="modal-card">
+    <div class="modal-icon"><i class="fa-solid fa-right-from-bracket" style="color:#fff;"></i></div>
+    <div class="modal-title">Log out of SpamShield?</div>
+    <div class="modal-text">You'll need to sign in again to receive real-time phishing alerts on this device.</div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" id="cancelLogout">Cancel</button>
+      <button class="modal-btn modal-btn-confirm" id="confirmLogout">Logout</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Floating background particles (matches the rest of PhishGuard)
+  (function(){
+    const count = 16;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = 2 + Math.random() * 4;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.bottom = (Math.random() * -20) + 'vh';
+      p.style.animationDuration = (10 + Math.random() * 14) + 's';
+      p.style.animationDelay = (Math.random() * 10) + 's';
+      document.body.appendChild(p);
+    }
+  })();
+
+  // Back button
+  document.getElementById('backBtn').addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      showToast('Returning to Dashboard');
+    }
+  });
+
+  // Toast helper
+  let toastTimer;
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> toast.classList.remove('show'), 2200);
+  }
+
+  // Generic setting click (placeholder navigation hook)
+  function go(el, label){
+    showToast('Opening ' + label + '…');
+    return false;
+  }
+
+  // Logout modal
+  const logoutModal = document.getElementById('logoutModal');
+  document.getElementById('logoutTrigger').addEventListener('click', function(){
+    logoutModal.classList.add('active');
+  });
+  document.getElementById('cancelLogout').addEventListener('click', function(){
+    logoutModal.classList.remove('active');
+  });
+  logoutModal.addEventListener('click', function(e){
+    if (e.target === logoutModal) logoutModal.classList.remove('active');
+  });
+  document.getElementById('confirmLogout').addEventListener('click', function(){
+    logoutModal.classList.remove('active');
+    showToast('Logged out successfully');
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') logoutModal.classList.remove('active');
+  });
+</script>
+
+</body>
+</html>
