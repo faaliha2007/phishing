@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhishGuard — Risk Details</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#050507;
+    --bg-2:#0B0B0F;
+    --bg-3:#141010;
+    --orange:#FF7A35;
+    --orange-bright:#FF5B3D;
+    --red:#FF4500;
+    --white:#FFFFFF;
+    --text-secondary:rgba(255,255,255,0.65);
+    --text-faint:rgba(255,255,255,0.4);
+    --glass-border:rgba(255,122,53,0.22);
+    --glass-bg:rgba(255,255,255,0.03);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{
+    height:100%;
+    width:100%;
+  }
+
+  body{
+    font-family:'Inter',sans-serif;
+    background:
+      radial-gradient(ellipse 700px 500px at 12% 8%, rgba(255,90,40,0.16), transparent 60%),
+      radial-gradient(ellipse 600px 600px at 88% 14%, rgba(255,69,0,0.10), transparent 55%),
+      radial-gradient(ellipse 900px 700px at 50% 38%, rgba(255,122,53,0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+    color:var(--white);
+    min-height:100vh;
+    width:100%;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* floating particles */
+  .particle{
+    position:fixed;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,140,80,0.8), rgba(255,69,0,0) 70%);
+    pointer-events:none;
+    opacity:0.5;
+    animation:drift linear infinite;
+    z-index:0;
+  }
+  @keyframes drift{
+    0%{transform:translateY(0) translateX(0); opacity:0;}
+    10%{opacity:0.6;}
+    90%{opacity:0.4;}
+    100%{transform:translateY(-120vh) translateX(20px); opacity:0;}
+  }
+
+  .page{
+    position:relative;
+    z-index:1;
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:36px 20px 56px;
+  }
+
+  /* header / logo */
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:34px;
+  }
+  .brand-icon{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+    background:linear-gradient(135deg, var(--orange) 0%, var(--red) 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 18px rgba(255,90,40,0.55);
+  }
+  .brand-icon svg{width:18px;height:18px;}
+  .brand-name{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:0.3px;
+  }
+
+  .eyebrow{
+    font-family:'Playfair Display',serif;
+    font-weight:600;
+    font-size:0.78rem;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:10px;
+    text-align:center;
+  }
+
+  h1.title{
+    font-family:'Playfair Display',serif;
+    font-weight:800;
+    font-size:2.4rem;
+    text-align:center;
+    margin-bottom:6px;
+  }
+
+  .subtitle{
+    color:var(--text-secondary);
+    font-size:0.95rem;
+    text-align:center;
+    max-width:420px;
+    margin-bottom:30px;
+    line-height:1.5;
+  }
+
+  /* ===== GAUGE ===== */
+  .gauge-wrap{
+    position:relative;
+    width:300px;
+    max-width:80vw;
+    margin:6px auto 8px;
+  }
+  .gauge-glow{
+    position:absolute;
+    top:-40px;
+    left:50%;
+    transform:translateX(-50%);
+    width:420px;
+    height:420px;
+    background:radial-gradient(circle, rgba(255,80,30,0.35), rgba(255,69,0,0) 70%);
+    filter:blur(10px);
+    z-index:0;
+  }
+  .gauge-svg{
+    position:relative;
+    z-index:1;
+    width:100%;
+    height:auto;
+    display:block;
+  }
+  .gauge-needle-dot{
+    filter:drop-shadow(0 0 8px rgba(255,80,30,0.9));
+  }
+  .gauge-center{
+    position:absolute;
+    bottom:6px;
+    left:0;
+    right:0;
+    text-align:center;
+    z-index:2;
+  }
+  .gauge-percent{
+    font-family:'Playfair Display',serif;
+    font-weight:800;
+    font-size:3.1rem;
+    line-height:1;
+    background:linear-gradient(135deg, #FFB37A 0%, var(--orange-bright) 55%, var(--red) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .gauge-status{
+    margin-top:6px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.92rem;
+    font-weight:700;
+    letter-spacing:0.4px;
+    color:var(--orange-bright);
+    text-transform:uppercase;
+  }
+  .gauge-status .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--red);
+    box-shadow:0 0 8px rgba(255,69,0,0.9);
+  }
+
+  .gauge-labels{
+    display:flex;
+    justify-content:space-between;
+    max-width:300px;
+    margin:0 auto 36px;
+    padding:0 6px;
+    font-size:0.68rem;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+  }
+
+  /* ===== SECTIONS ===== */
+  .content{
+    width:100%;
+    max-width:560px;
+  }
+
+  .section-heading{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:1.3rem;
+    margin-bottom:16px;
+    text-align:left;
+  }
+
+  .factor-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-bottom:34px;
+  }
+
+  .factor-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 18px;
+    border-radius:16px;
+    background:linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 4px 24px rgba(0,0,0,0.35);
+    transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    cursor:default;
+  }
+  .factor-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(255,122,53,0.55);
+    box-shadow:0 10px 30px rgba(255,80,30,0.18), 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  .factor-icon{
+    flex-shrink:0;
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,122,53,0.10);
+    border:1px solid rgba(255,122,53,0.35);
+  }
+  .factor-icon svg{width:20px;height:20px;stroke:var(--orange-bright);}
+
+  .factor-text{flex:1;min-width:0;}
+  .factor-title{
+    font-weight:700;
+    font-size:0.96rem;
+    margin-bottom:2px;
+  }
+  .factor-desc{
+    font-size:0.8rem;
+    color:var(--text-secondary);
+    line-height:1.4;
+  }
+
+  .severity-tag{
+    flex-shrink:0;
+    font-size:0.65rem;
+    font-weight:700;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:999px;
+    color:var(--red);
+    background:rgba(255,69,0,0.12);
+    border:1px solid rgba(255,69,0,0.35);
+    white-space:nowrap;
+  }
+  .severity-tag.medium{
+    color:var(--orange);
+    background:rgba(255,122,53,0.12);
+    border-color:rgba(255,122,53,0.35);
+  }
+
+  /* ===== TIP CARD ===== */
+  .tip-card{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    padding:18px 20px;
+    border-radius:16px;
+    margin-bottom:34px;
+    background:linear-gradient(135deg, rgba(255,90,40,0.14), rgba(255,69,0,0.05));
+    border:1px solid rgba(255,90,40,0.4);
+    box-shadow:0 0 30px rgba(255,69,0,0.12), inset 0 1px 0 rgba(255,255,255,0.04);
+    position:relative;
+    overflow:hidden;
+  }
+  .tip-card::before{
+    content:"";
+    position:absolute;
+    top:-30%;
+    right:-10%;
+    width:160px;
+    height:160px;
+    background:radial-gradient(circle, rgba(255,122,53,0.3), transparent 70%);
+    pointer-events:none;
+  }
+  .tip-icon{
+    flex-shrink:0;
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    background:linear-gradient(135deg, var(--orange), var(--red));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 16px rgba(255,90,40,0.5);
+  }
+  .tip-icon svg{width:18px;height:18px;stroke:#fff;}
+  .tip-text-wrap{position:relative;z-index:1;}
+  .tip-label{
+    font-weight:700;
+    font-size:0.85rem;
+    color:var(--orange-bright);
+    margin-bottom:4px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  .tip-text{
+    font-size:0.88rem;
+    color:rgba(255,255,255,0.85);
+    line-height:1.5;
+  }
+
+  /* ===== ACTION BUTTONS ===== */
+  .actions{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    width:100%;
+  }
+  @media(min-width:480px){
+    .actions{flex-direction:row;}
+  }
+
+  .btn{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:16px 20px;
+    border-radius:999px;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:0.95rem;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    letter-spacing:0.2px;
+  }
+  .btn svg{width:18px;height:18px;}
+
+  .btn-block{
+    background:linear-gradient(135deg, var(--orange) 0%, var(--orange-bright) 55%, var(--red) 100%);
+    color:#fff;
+    box-shadow:0 8px 26px rgba(255,80,30,0.4), 0 0 0 1px rgba(255,255,255,0.05) inset;
+  }
+  .btn-block:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 32px rgba(255,80,30,0.55);
+  }
+  .btn-block:active{transform:translateY(0);}
+
+  .btn-report{
+    background:rgba(255,255,255,0.04);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.16);
+    backdrop-filter:blur(10px);
+  }
+  .btn-report:hover{
+    background:rgba(255,255,255,0.08);
+    border-color:rgba(255,122,53,0.5);
+    transform:translateY(-2px);
+  }
+  .btn-report:active{transform:translateY(0);}
+
+  .footnote{
+    margin-top:22px;
+    font-size:0.72rem;
+    color:var(--text-faint);
+    text-align:center;
+    max-width:420px;
+  }
+
+  @media(max-width:380px){
+    h1.title{font-size:2rem;}
+    .gauge-percent{font-size:2.6rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Brand -->
+  <div class="brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3z"/>
+        <path d="M9.2 12.2l2 2 3.6-4"/>
+      </svg>
+    </div>
+    <div class="brand-name">SpamShield</div>
+  </div>
+
+  <div class="eyebrow">Threat Analysis</div>
+  <h1 class="title">Risk Details</h1>
+  <p class="subtitle">This message was scanned and flagged. Here's a breakdown of what we found.</p>
+
+  <!-- Gauge -->
+  <div class="gauge-wrap">
+    <div class="gauge-glow"></div>
+    <svg class="gauge-svg" viewBox="0 0 300 175" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#3DDC72"/>
+          <stop offset="35%" stop-color="#FFD23D"/>
+          <stop offset="65%" stop-color="#FF7A35"/>
+          <stop offset="100%" stop-color="#FF4500"/>
+        </linearGradient>
+        <filter id="glowFilter" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- track -->
+      <path d="M20,160 A130,130 0 0 1 280,160" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="16" stroke-linecap="round"/>
+
+      <!-- progress -->
+      <path id="gaugeProgress" d="M20,160 A130,130 0 0 1 280,160" fill="none" stroke="url(#gaugeGradient)" stroke-width="16" stroke-linecap="round" filter="url(#glowFilter)"/>
+
+      <!-- needle dot -->
+      <circle id="needleDot" class="gauge-needle-dot" r="8" fill="#FFFFFF"/>
+    </svg>
+
+    <div class="gauge-center">
+      <div class="gauge-percent" id="percentValue">92%</div>
+      <div class="gauge-status"><span class="dot"></span>High Risk</div>
+    </div>
+  </div>
+
+  <div class="gauge-labels">
+    <span>Safe</span>
+    <span>Caution</span>
+    <span>Critical</span>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <h2 class="section-heading">Why is this risky?</h2>
+
+    <div class="factor-list">
+
+      <div class="factor-card">
+        <div class="factor-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.36-1.36"/></svg>
+        </div>
+        <div class="factor-text">
+          <div class="factor-title">Suspicious URL</div>
+          <div class="factor-desc">Link domain doesn't match the claimed sender.</div>
+        </div>
+        <div class="severity-tag">High</div>
+      </div>
+
+      <div class="factor-card">
+        <div class="factor-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M10.3 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.7 3.86a2 2 0 0 0-3.4 0z"/><path d="M12 17h.01"/></svg>
+        </div>
+        <div class="factor-text">
+          <div class="factor-title">Urgent Language</div>
+          <div class="factor-desc">Message pressures you to act immediately.</div>
+        </div>
+        <div class="severity-tag medium">Medium</div>
+      </div>
+
+      <div class="factor-card">
+        <div class="factor-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3z"/></svg>
+        </div>
+        <div class="factor-text">
+          <div class="factor-title">Possible Phishing</div>
+          <div class="factor-desc">Matches known credential-harvesting patterns.</div>
+        </div>
+        <div class="severity-tag">High</div>
+      </div>
+
+      <div class="factor-card">
+        <div class="factor-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-6 7 6v11"/><path d="M9 21v-6h6v6"/><path d="M9 10h.01M12 10h.01M15 10h.01"/></svg>
+        </div>
+        <div class="factor-text">
+          <div class="factor-title">Banking Scam Pattern</div>
+          <div class="factor-desc">Mimics a bank requesting account verification.</div>
+        </div>
+        <div class="severity-tag">High</div>
+      </div>
+
+    </div>
+
+    <!-- Tip -->
+    <div class="tip-card">
+      <div class="tip-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2Z"/></svg>
+      </div>
+      <div class="tip-text-wrap">
+        <div class="tip-label">Tip</div>
+        <div class="tip-text">Do not share personal, banking, OTP, or password details.</div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-block" id="blockBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>
+        Block Sender
+      </button>
+      <button class="btn btn-report" id="reportBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg>
+        Report Phishing
+      </button>
+    </div>
+
+    <p class="footnote">PhishGuard scans every link and message in real time to keep your data safe.</p>
+
+  </div>
+
+</div>
+
+<script>
+  // Animate gauge fill on load
+  (function(){
+    const path = document.getElementById('gaugeProgress');
+    const dot = document.getElementById('needleDot');
+    const percentEl = document.getElementById('percentValue');
+    const targetPercent = 92; // risk percentage
+    const len = path.getTotalLength();
+
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+
+    const startPoint = path.getPointAtLength(0);
+    dot.setAttribute('cx', startPoint.x);
+    dot.setAttribute('cy', startPoint.y);
+
+    let current = 0;
+    const duration = 1400;
+    const startTime = performance.now();
+
+    function ease(t){ return 1 - Math.pow(1 - t, 3); }
+
+    function animate(now){
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const eased = ease(t);
+      current = eased * targetPercent;
+
+      const offset = len - (len * (current / 100));
+      path.style.strokeDashoffset = offset;
+
+      const pointLen = len * (current / 100);
+      const pt = path.getPointAtLength(pointLen);
+      dot.setAttribute('cx', pt.x);
+      dot.setAttribute('cy', pt.y);
+
+      percentEl.textContent = Math.round(current) + '%';
+
+      if (t < 1) {
+        requestAnimationFrame(animate);
+      }
+    }
+    requestAnimationFrame(animate);
+  })();
+
+  // Floating background particles
+  (function(){
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = 2 + Math.random() * 4;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.bottom = (Math.random() * -20) + 'vh';
+      p.style.animationDuration = (10 + Math.random() * 14) + 's';
+      p.style.animationDelay = (Math.random() * 10) + 's';
+      document.body.appendChild(p);
+    }
+  })();
+
+  // Button interactions
+  document.getElementById('blockBtn').addEventListener('click', function(){
+    this.innerHTML = '✓ Sender Blocked';
+    this.style.filter = 'grayscale(0.15)';
+  });
+  document.getElementById('reportBtn').addEventListener('click', function(){
+    this.innerHTML = '✓ Reported';
+  });
+</script>
+
+</body>
+</html>
