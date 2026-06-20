@@ -1,7 +1,7 @@
 var namebox = document.getElementById("namebox")
 var passwordbox = document.getElementById("passwordbox")
 
-var loginbtn = document.getElementById("signinbtn") // your button id is signinbtn
+var loginbtn = document.getElementById("signinbtn") 
 
 var nameerror = document.getElementById("nameerror")
 var passworderror = document.getElementById("passworderror")
