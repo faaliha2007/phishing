@@ -22,7 +22,7 @@ function gosignin()
 
 function goback()
 {
-    history.back()
+    window.location.href = "index.html"
 }
 
 function gologin()
