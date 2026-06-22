@@ -4,23 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In</title>
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-[#1c1719] min-h-screen flex items-center justify-center">
+<body class="bg-[#05090F] min-h-screen flex items-center justify-center">
 
 
-<div class="absolute left-0 top-0 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl"></div>
+<button
+onclick="goback()"
+class="absolute top-6 left-6 z-50 w-10 h-10 rounded-full bg-gray-800 border border-gray-700 text-white hover:border-[#334155] flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-125">
 
-<div class="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-rose-500/20 blur-3xl"></div>
+<i class="fa-solid fa-arrow-left"></i>
+
+</button>
+
+
+
+<div class="absolute left-0 top-0 h-72 w-72 rounded-full bg-[#05090] blur-3xl"></div>
+
+<div class="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#07162D] blur-3xl"></div>
 
     
 
-  <div class="absolute w-96 h-96 bg-[#1c1719] blur-3xl opacity-20 rounded-full -top-20 -left-20"></div>
+  <div class="absolute w-96 h-96 bg-[#0A192F] blur-3xl opacity-20 rounded-full -top-20 -left-20"></div>
 
-  <div class="relative w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl p-10 text-white">
+  <div class="relative w-full max-w-2xl bg-gray-900 border border-[#1B4965] rounded-2xl shadow-2xl p-10 text-white">
 
-    <h1 class="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-amber-300 to-rose-400 bg-clip-text text-transparent">
+    <h1 class="text-3xl font-bold text-center mb-8 bg-[#00E5FF] bg-clip-text text-transparent">
       Sign In
     </h1>
 
@@ -31,7 +43,7 @@
         <input type="text"
           placeholder="Your name"
           id="namebox"
-          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-400 outline-none text-white">
+          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-[#334155] focus:ring-2 focus:ring-[#1E293B] outline-none text-white">
 
         <p class="text-sm text-red-500 mt-1 hidden" id="nameerror">Name is required</p>
       </div>
@@ -41,7 +53,7 @@
         <input type="email"
         id="emailbox"
           placeholder="example@gmail.com"
-          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-400 outline-none text-white">
+          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-[#334155] focus:ring-2 focus:ring-[#1E293B] outline-none text-white">
 
         <p class="text-sm text-red-500 mt-1 hidden" id="emailerror">Enter a valid email address</p>
       </div>
@@ -51,7 +63,7 @@
         <input type="password"
         id="passwordbox"
           placeholder="••••••••"
-          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-400 outline-none text-white">
+          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-[#334155] focus:ring-2 focus:ring-[#1E293B] outline-none text-white">
 
         <p class="text-sm text-red-500 mt-1 hidden" id="passworderror">Password must be at least 6 characters</p>
       </div>
@@ -61,24 +73,24 @@
         <input type="password"
           placeholder="••••••••"
           id="confirmbox"
-          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-400 outline-none text-white">
+          class="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-[#334155] focus:ring-2 focus:ring-[#1E293B] outline-none text-white">
 
         <p class="text-sm text-red-500 mt-1 hidden" id="confirmerror">Passwords do not match</p>
       </div>
 
       <button type="button"
       id="signinbtn"
-        class="w-full p-3 mt-4 rounded-lg bg-gradient-to-r from-orange-400 to-rose-500 hover:bg-orange-600 text-black font-bold transition cursor-not-allowed" id="signinbtn">
+        class="w-full p-3 mt-4 rounded-lg bg-[#00BFA6] hover:bg-[#00E5FF] text-white font-bold transition cursor-not-allowed" id="signinbtn">
         Sign In
       </button>
 
       <p class="text-center text-sm text-gray-400">
         Already have an account?
-        <span onClick="gologin()" class="bg-gradient-to-r from-amber-300 to-rose-400 bg-clip-text text-transparent cursor-pointer hover:underline">Log In</span>
+        <span onClick="gologin()" class="bg-[#00E5FF] bg-clip-text text-transparent cursor-pointer hover:underline">Log In</span>
       </p>
 
   
-      <div class="flex items-center justify-center gap-3 border border-gray-700 p-3 rounded-lg cursor-pointer hover:bg-gray-800 transition">
+      <div class="flex items-center justify-center gap-3 border border border-[#334155] focus:ring-2 focus:ring-[#1E293B] p-3 rounded-lg cursor-pointer hover:bg-gray-800 transition">
         <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5">
         <span clasas="text-sm">Continue with Google</span>
       </div>
@@ -88,7 +100,7 @@
 
 
    <div id="msg"
-    class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-400 to-rose-500 text-white text-sm px-5 py-3 rounded-full shadow-lg opacity-0 transition">
+    class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#00BFA6] text-white text-sm px-5 py-3 rounded-full shadow-lg opacity-0 transition">
     Welcome to phishing
   </div>
 
