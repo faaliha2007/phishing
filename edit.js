@@ -14,7 +14,7 @@ var editmsg = document.getElementById("editmsg")
 
 function goback()
 {
-    history.back()
+    window.location.href = "settings.html"
 }
 
 function validate() {
