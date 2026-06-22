@@ -12,6 +12,11 @@ var confirmerror = document.getElementById("confirmerror")
 
 var editmsg = document.getElementById("editmsg")
 
+function goback()
+{
+    history.back()
+}
+
 function validate() {
 
     let valid = true
