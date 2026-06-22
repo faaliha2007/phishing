@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PhishGuard — Settings</title>
@@ -8,29 +10,43 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-  :root{
-    --bg-1:#050507;
-    --bg-2:#0B0B0F;
-    --bg-3:#141010;
-    --orange:#FF7A35;
-    --orange-bright:#FF5B3D;
-    --red:#FF4500;
-    --white:#FFFFFF;
-    --text-secondary:rgba(255,255,255,0.65);
-    --text-faint:rgba(255,255,255,0.4);
-    --glass-border:rgba(255,122,53,0.20);
-  }
+ :root{
+  --bg-1:#05090F;          /* Page background */
+  --bg-2:#07162D;          /* Secondary background */
+  --bg-3:#0A192F;          /* Card background */
+
+  --card-bg:#0A192F;
+  --card-border:#1B4965;
+
+  --heading:#00E5FF;
+  --subtitle:#B0BEC5;
+
+  --input-bg:#1E293B;
+  --input-border:#334155;
+
+  --text:#FFFFFF;
+  --placeholder:#94A3B8;
+
+  --icon:#00E5FF;
+
+  --button:#00BFA6;
+  --button-hover:#00E5FF;
+}
 
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;width:100%;}
 
   body{
     font-family:'Inter',sans-serif;
-    background:
-      radial-gradient(ellipse 700px 500px at 10% 6%, rgba(255,90,40,0.16), transparent 60%),
-      radial-gradient(ellipse 600px 600px at 90% 12%, rgba(255,69,0,0.10), transparent 55%),
-      radial-gradient(ellipse 900px 700px at 50% 40%, rgba(255,122,53,0.08), transparent 60%),
-      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+   
+background:
+  radial-gradient(
+    ellipse 900px 500px at 50% 50%,
+    rgba(0,229,255,0.06),
+    transparent 70%
+  ),
+  #05090F;
+
     color:var(--white);
     min-height:100vh;
     width:100%;
@@ -39,21 +55,8 @@
   }
 
   /* floating particles */
-  .particle{
-    position:fixed;
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(255,140,80,0.8), rgba(255,69,0,0) 70%);
-    pointer-events:none;
-    opacity:0.5;
-    animation:drift linear infinite;
-    z-index:0;
-  }
-  @keyframes drift{
-    0%{transform:translateY(0) translateX(0); opacity:0;}
-    10%{opacity:0.6;}
-    90%{opacity:0.4;}
-    100%{transform:translateY(-120vh) translateX(20px); opacity:0;}
-  }
+ 
+
 
   .page{
     position:relative;
@@ -64,6 +67,8 @@
     flex-direction:column;
     align-items:center;
     padding:26px 20px 60px;
+    color: #07162D;
+    
   }
 
   /* ===== HEADER ===== */
@@ -74,31 +79,46 @@
     grid-template-columns:44px 1fr 44px;
     align-items:center;
     margin-bottom:8px;
+    color: #00E5FF
+   
   }
 
   .back-btn{
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.14);
-    backdrop-filter:blur(10px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-size:0.95rem;
-    cursor:pointer;
-    transition:all 0.25s ease;
-  }
-  .back-btn:hover{
-    background:rgba(255,122,53,0.12);
-    border-color:rgba(255,122,53,0.5);
-    transform:translateX(-3px);
-    box-shadow:0 0 16px rgba(255,90,40,0.3);
-  }
+  position:absolute;
+  top:24px;
+  left:24px;
+  z-index:50;
+
+  width:40px;
+  height:40px;
+
+  border-radius:50%;
+
+  background:#1f2937;
+  border:1px solid #374151;
+
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:all 0.2s ease;
+}
+
+.back-btn:hover{
+  border-color:#00E5FF;
+  transform:scale(1.1);
+}
+
+.back-btn:active{
+  transform:scale(1.25);
+}
 
   .topbar-title{
+   
     text-align:center;
     font-family:'Playfair Display',serif;
     font-weight:700;
@@ -116,7 +136,7 @@
     font-size:0.76rem;
     letter-spacing:1.6px;
     text-transform:uppercase;
-    color:var(--orange);
+    color:white;
     margin-bottom:10px;
   }
   h1.title{
@@ -124,9 +144,10 @@
     font-weight:800;
     font-size:2.3rem;
     margin-bottom:8px;
+    color:#00E5FF;
   }
   .subtitle{
-    color:var(--text-secondary);
+    color:#B0BEC5;
     font-size:0.92rem;
     max-width:380px;
     margin:0 auto;
@@ -137,6 +158,7 @@
   .content{
     width:100%;
     max-width:620px;
+     color:#07162D;
   }
 
   .group{
@@ -160,7 +182,7 @@
     font-weight:700;
     letter-spacing:1.2px;
     text-transform:uppercase;
-    color:var(--text-faint);
+    color:#B0BEC5;
     margin:0 4px 12px;
   }
 
@@ -176,8 +198,12 @@
     gap:14px;
     padding:15px 16px;
     border-radius:16px;
-    background:linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
-    border:1px solid var(--glass-border);
+   
+   background:#0A192F;
+   border:1px solid #1B4965;
+   
+
+
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
     box-shadow:0 4px 22px rgba(0,0,0,0.35);
@@ -188,27 +214,19 @@
   }
   .setting-card:hover{
     transform:translateY(-2px);
-    border-color:rgba(255,122,53,0.5);
+    border-color:#00E5FF;
     background:linear-gradient(135deg, rgba(255,122,53,0.08), rgba(255,255,255,0.02));
     box-shadow:0 10px 28px rgba(255,80,30,0.16), 0 4px 22px rgba(0,0,0,0.4);
   }
   .setting-card:active{transform:translateY(0) scale(0.99);}
 
-  .setting-icon{
-    flex-shrink:0;
-    width:42px;
-    height:42px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,122,53,0.10);
-    border:1px solid rgba(255,122,53,0.32);
-    color:var(--orange-bright);
-    font-size:1.05rem;
-    transition:box-shadow 0.22s ease;
-  }
+.setting-icon{
+   color:#00E5FF;
+   background:rgba(0,229,255,0.08);
+   border:1px solid rgba(0,229,255,0.2);
+}
   .setting-card:hover .setting-icon{
+      border-color:#00E5FF;
     box-shadow:0 0 14px rgba(255,90,40,0.4);
   }
 
@@ -217,10 +235,11 @@
     font-weight:700;
     font-size:0.94rem;
     margin-bottom:2px;
+    color:white;
   }
   .setting-desc{
     font-size:0.78rem;
-    color:var(--text-secondary);
+    color:white;
     line-height:1.35;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -231,40 +250,46 @@
     flex-shrink:0;
     font-size:0.78rem;
     font-weight:600;
-    color:var(--text-faint);
+    color:white;
     white-space:nowrap;
   }
 
   .chevron{
     flex-shrink:0;
-    color:var(--text-faint);
+    color:white;
     font-size:0.85rem;
     transition:transform 0.22s ease, color 0.22s ease;
   }
   .setting-card:hover .chevron{
-    color:var(--orange-bright);
+      border-color:#00E5FF;
     transform:translateX(3px);
   }
 
   /* ===== LOGOUT ===== */
-  .logout-card{
-    border-color:rgba(255,69,0,0.4);
-    background:linear-gradient(135deg, rgba(255,69,0,0.10), rgba(255,69,0,0.02));
-  }
-  .logout-card .setting-icon{
-    background:rgba(255,69,0,0.14);
-    border-color:rgba(255,69,0,0.45);
-    color:var(--red);
-  }
-  .logout-card .setting-title{color:#FF8568;}
-  .logout-card:hover{
-    border-color:rgba(255,69,0,0.7);
-    box-shadow:0 10px 28px rgba(255,69,0,0.2), 0 4px 22px rgba(0,0,0,0.4);
-  }
-  .logout-card:hover .setting-icon{
-    box-shadow:0 0 14px rgba(255,69,0,0.5);
-  }
+ .logout-card{
+    background:#0A192F;
+    border:1px solid #1B4965;
+}
 
+.logout-card .setting-icon{
+    color:#00E5FF;
+    background:#0A192F;
+    border:1px solid #1B4965;
+}
+
+.logout-card .setting-title{
+    color:#FFFFFF;
+}
+.logout-card:hover{
+    border-color:#00E5FF;
+    box-shadow:
+      0 10px 28px rgba(0,229,255,0.15),
+      0 4px 22px rgba(0,0,0,0.4);
+}
+
+.logout-card:hover .setting-icon{
+    box-shadow:0 0 14px rgba(0,229,255,0.4);
+}
   .app-version{
     text-align:center;
     margin-top:8px;
@@ -402,14 +427,22 @@
 </head>
 <body>
 
+<button onclick="goback()" class="back-btn">
+
+  <i class="fa-solid fa-arrow-left"></i>
+
+</button>
+
+
+
+
 <div class="page">
 
   <!-- Top bar -->
   <div class="topbar">
-    <button class="back-btn" id="backBtn" aria-label="Go back">
-      <i class="fa-solid fa-arrow-left"></i>
-    </button>
+  <div></div>
     <div class="topbar-title">SpamShield</div>
+  
     <span></span>
   </div>
 
@@ -425,18 +458,14 @@
     <div class="group">
       <div class="group-label">Account</div>
       <div class="setting-list">
-<a class="setting-card" href="edit.html">
-  <div class="setting-icon">
-    <i class="fa-solid fa-user"></i>
-  </div>
-
-  <div class="setting-text">
-    <div class="setting-title">Profile</div>
-    <div class="setting-desc">View and edit personal details</div>
-  </div>
-
-  <i class="fa-solid fa-chevron-right chevron"></i>
-</a>
+        <a class="setting-card" href="#" onclick="return go(this,'Profile')">
+          <div class="setting-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="setting-text">
+            <div class="setting-title">Profile</div>
+            <div class="setting-desc">View and edit personal details</div>
+          </div>
+          <i class=" fa-solid fa-chevron-right chevron"></i>
+        </a>
 
         <a class="setting-card" href="#" onclick="return go(this,'Language')">
           <div class="setting-icon"><i class="fa-solid fa-globe"></i></div>
