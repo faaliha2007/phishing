@@ -14,7 +14,7 @@ var editmsg = document.getElementById("editmsg")
 
 function goback()
 {
-    window.location.href = "settings.html"
+    history.back()
 }
 
 function validate() {
@@ -75,6 +75,7 @@ editbtn.addEventListener("click", function () {
         setTimeout(() => {
             editmsg.classList.add("opacity-0")
             editmsg.classList.remove("opacity-100")
+            window.location.href = "settings.html"
         }, 2000)
     }
 })
