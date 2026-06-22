@@ -1,25 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PhishGuard — Risk Details</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg-1:#050507;
-    --bg-2:#0B0B0F;
-    --bg-3:#141010;
-    --orange:#FF7A35;
-    --orange-bright:#FF5B3D;
-    --red:#FF4500;
-    --white:#FFFFFF;
-    --text-secondary:rgba(255,255,255,0.65);
-    --text-faint:rgba(255,255,255,0.4);
-    --glass-border:rgba(255,122,53,0.22);
-    --glass-bg:rgba(255,255,255,0.03);
-  }
+:root{
+  --bg-1:#05090F;
+  --bg-2:#07162D;
+  --bg-3:#0A192F;
+
+  --cyan:#00E5FF;
+  --teal:#00BFA6;
+
+  --white:#FFFFFF;
+  --text-secondary:#B0BEC5;
+  --text-faint:#94A3B8;
+
+  --glass-border:#1B4965;
+}
+  .back-btn{
+  position:absolute;
+  top:24px;
+  left:24px;
+  z-index:50;
+
+  width:40px;
+  height:40px;
+
+  border-radius:50%;
+
+  background:#1f2937;
+  border:1px solid #374151;
+
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:all 0.2s ease;
+}
+
+.back-btn:hover{
+  border-color:#00E5FF;
+  transform:scale(1.1);
+}
+
+.back-btn:active{
+  transform:scale(1.25);
+}
 
   *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -28,37 +64,25 @@
     width:100%;
   }
 
-  body{
-    font-family:'Inter',sans-serif;
-    background:
-      radial-gradient(ellipse 700px 500px at 12% 8%, rgba(255,90,40,0.16), transparent 60%),
-      radial-gradient(ellipse 600px 600px at 88% 14%, rgba(255,69,0,0.10), transparent 55%),
-      radial-gradient(ellipse 900px 700px at 50% 38%, rgba(255,122,53,0.10), transparent 60%),
-      linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+body{
+  background:
+  radial-gradient(
+    circle at center,
+    rgba(0,229,255,0.08),
+    transparent 65%
+  ),
+  #05090F;
+
+ 
     color:var(--white);
     min-height:100vh;
     width:100%;
     overflow-x:hidden;
     position:relative;
-  }
+}
 
   /* floating particles */
-  .particle{
-    position:fixed;
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(255,140,80,0.8), rgba(255,69,0,0) 70%);
-    pointer-events:none;
-    opacity:0.5;
-    animation:drift linear infinite;
-    z-index:0;
-  }
-  @keyframes drift{
-    0%{transform:translateY(0) translateX(0); opacity:0;}
-    10%{opacity:0.6;}
-    90%{opacity:0.4;}
-    100%{transform:translateY(-120vh) translateX(20px); opacity:0;}
-  }
-
+  
   .page{
     position:relative;
     z-index:1;
@@ -81,7 +105,7 @@
     width:34px;
     height:34px;
     border-radius:9px;
-    background:linear-gradient(135deg, var(--orange) 0%, var(--red) 100%);
+    background:#00E5FF;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -93,6 +117,7 @@
     font-weight:700;
     font-size:1.15rem;
     letter-spacing:0.3px;
+    color: #00E5FF;
   }
 
   .eyebrow{
@@ -101,7 +126,7 @@
     font-size:0.78rem;
     letter-spacing:1.6px;
     text-transform:uppercase;
-    color:var(--orange);
+    color: #00E5FF;
     margin-bottom:10px;
     text-align:center;
   }
@@ -137,7 +162,7 @@
     transform:translateX(-50%);
     width:420px;
     height:420px;
-    background:radial-gradient(circle, rgba(255,80,30,0.35), rgba(255,69,0,0) 70%);
+    background:radial-gradient(circle, rgba(255, 113, 30, 0.35), rgba(255,69,0,0) 70%);
     filter:blur(10px);
     z-index:0;
   }
@@ -164,7 +189,7 @@
     font-weight:800;
     font-size:3.1rem;
     line-height:1;
-    background:linear-gradient(135deg, #FFB37A 0%, var(--orange-bright) 55%, var(--red) 100%);
+    background:#e13618;
     -webkit-background-clip:text;
     background-clip:text;
     -webkit-text-fill-color:transparent;
@@ -183,7 +208,7 @@
   .gauge-status .dot{
     width:7px;height:7px;border-radius:50%;
     background:var(--red);
-    box-shadow:0 0 8px rgba(255,69,0,0.9);
+    box-shadow:0 0 8px rgba(0, 179, 255, 0.9);
   }
 
   .gauge-labels{
@@ -220,37 +245,54 @@
   }
 
   .factor-card{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:16px 18px;
-    border-radius:16px;
-    background:linear-gradient(135deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
-    border:1px solid var(--glass-border);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 18px;
+  border-radius:16px;
+
+  background:#0A192F;
+  border:1px solid #1B4965;
+
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+
+  box-shadow:0 4px 24px rgba(0,0,0,0.35);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+
+  cursor:default;
+}
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
     box-shadow:0 4px 24px rgba(0,0,0,0.35);
     transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     cursor:default;
-  }
+}
+
   .factor-card:hover{
     transform:translateY(-3px);
-    border-color:rgba(255,122,53,0.55);
-    box-shadow:0 10px 30px rgba(255,80,30,0.18), 0 4px 24px rgba(0,0,0,0.4);
+    border-color:#00E5FF;
+    box-shadow: #00E5FF;
   }
 
   .factor-icon{
-    flex-shrink:0;
-    width:42px;
-    height:42px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,122,53,0.10);
-    border:1px solid rgba(255,122,53,0.35);
-  }
-  .factor-icon svg{width:20px;height:20px;stroke:var(--orange-bright);}
+  flex-shrink:0;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(0,229,255,0.08);
+  border:1px solid rgba(0,229,255,0.2);
+}
+  
+  .factor-icon svg{width:20px;height:20px;stroke: #00E5FF;}
 
   .factor-text{flex:1;min-width:0;}
   .factor-title{
@@ -272,15 +314,15 @@
     text-transform:uppercase;
     padding:5px 10px;
     border-radius:999px;
-    color:var(--red);
-    background:rgba(255,69,0,0.12);
-    border:1px solid rgba(255,69,0,0.35);
+   color:#00E5FF;
+  background:rgba(0,229,255,0.08);
+  border:1px solid rgba(0,229,255,0.2);
     white-space:nowrap;
   }
   .severity-tag.medium{
-    color:var(--orange);
+    color: #00E5FF;
     background:rgba(255,122,53,0.12);
-    border-color:rgba(255,122,53,0.35);
+    border-color: #00E5FF;
   }
 
   /* ===== TIP CARD ===== */
@@ -291,8 +333,8 @@
     padding:18px 20px;
     border-radius:16px;
     margin-bottom:34px;
-    background:linear-gradient(135deg, rgba(255,90,40,0.14), rgba(255,69,0,0.05));
-    border:1px solid rgba(255,90,40,0.4);
+    background:#0A192F;
+ border:1px solid #1B4965;
     box-shadow:0 0 30px rgba(255,69,0,0.12), inset 0 1px 0 rgba(255,255,255,0.04);
     position:relative;
     overflow:hidden;
@@ -304,7 +346,7 @@
     right:-10%;
     width:160px;
     height:160px;
-    background:radial-gradient(circle, rgba(255,122,53,0.3), transparent 70%);
+    background:radial-gradient(circle, rgba(32, 182, 220, 0.3), transparent 70%);
     pointer-events:none;
   }
   .tip-icon{
@@ -312,18 +354,18 @@
     width:36px;
     height:36px;
     border-radius:10px;
-    background:linear-gradient(135deg, var(--orange), var(--red));
+    background: #00E5FF;
     display:flex;
     align-items:center;
     justify-content:center;
-    box-shadow:0 0 16px rgba(255,90,40,0.5);
+    box-shadow: #00E5FF;
   }
-  .tip-icon svg{width:18px;height:18px;stroke:#fff;}
+  .tip-icon svg{width:18px;height:18px;stroke:white;}
   .tip-text-wrap{position:relative;z-index:1;}
   .tip-label{
     font-weight:700;
     font-size:0.85rem;
-    color:var(--orange-bright);
+    color: #00E5FF;
     margin-bottom:4px;
     text-transform:uppercase;
     letter-spacing:0.5px;
@@ -364,13 +406,13 @@
   .btn svg{width:18px;height:18px;}
 
   .btn-block{
-    background:linear-gradient(135deg, var(--orange) 0%, var(--orange-bright) 55%, var(--red) 100%);
+    background:#00E5FF;
     color:#fff;
-    box-shadow:0 8px 26px rgba(255,80,30,0.4), 0 0 0 1px rgba(255,255,255,0.05) inset;
+    box-shadow:#00E5FF;
   }
   .btn-block:hover{
     transform:translateY(-2px);
-    box-shadow:0 12px 32px rgba(255,80,30,0.55);
+    box-shadow:#00E5FF;
   }
   .btn-block:active{transform:translateY(0);}
 
@@ -382,7 +424,7 @@
   }
   .btn-report:hover{
     background:rgba(255,255,255,0.08);
-    border-color:rgba(255,122,53,0.5);
+    border-color:#00E5FF;
     transform:translateY(-2px);
   }
   .btn-report:active{transform:translateY(0);}
@@ -402,7 +444,11 @@
 </style>
 </head>
 <body>
+<button onclick="history.back()" class="back-btn">
 
+  <i class="fa-solid fa-arrow-left"></i>
+
+</button>
 <div class="page">
 
   <!-- Brand -->
