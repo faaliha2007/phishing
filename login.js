@@ -59,7 +59,7 @@ loginbtn.addEventListener("click", function () {
         setTimeout(() => {
             msg.classList.add("opacity-0")
             msg.classList.remove("opacity-100")
-            window.location.href = "user.html"
+            window.location.href = "notification.html"
         }, 2000)
     }
 })
