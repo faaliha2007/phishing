@@ -427,7 +427,7 @@ background:
 </head>
 <body>
 
-<button onclick="goback()" class="back-btn">
+<button onclick="gouser()" class="back-btn">
 
   <i class="fa-solid fa-arrow-left"></i>
 
@@ -687,6 +687,10 @@ background:
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape') logoutModal.classList.remove('active');
   });
+function gouser(){
+  window.location.href = "user.html"
+}
+  
 </script>
 
 </body>
