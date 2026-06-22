@@ -1,7 +1,7 @@
 var namebox = document.getElementById("namebox")
 var passwordbox = document.getElementById("passwordbox")
 
-var loginbtn = document.getElementById("signinbtn") 
+var loginbtn = document.getElementById("loginbtn") 
 
 var nameerror = document.getElementById("nameerror")
 var passworderror = document.getElementById("passworderror")
@@ -43,6 +43,7 @@ function validate() {
         loginbtn.disabled = true
         loginbtn.classList.add("opacity-50", "cursor-not-allowed")
     }
+    return valid
 }
 
 namebox.oninput = validate
@@ -50,7 +51,7 @@ passwordbox.oninput = validate
 
 loginbtn.addEventListener("click", function () {
 
-    validate()
+    if(validate()){
 
     if (!loginbtn.disabled) {
         msg.classList.remove("opacity-0")
@@ -63,3 +64,4 @@ loginbtn.addEventListener("click", function () {
         }, 2000)
     }
 })
+
